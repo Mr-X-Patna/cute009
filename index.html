@@ -1,53 +1,138 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ff4d6d" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#170b12" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="A tiny, ridiculously cute question… Do you love me?" />
+  <meta name="author" content="You 💗" />
+  <meta property="og:title" content="Do you love me? 💗" />
+  <meta property="og:description" content="One question. Two buttons. One of them is very shy." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Do you love me? 💗" />
+  <meta name="twitter:description" content="One question. Two buttons. One of them is very shy." />
+
+  <title>Do you love me? 💗</title>
+
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff4d6d' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="do_you_love_me.css" />
-  <title>DO you love me?</title>
+  <link rel="preconnect" href="https://media.tenor.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- tiktok "meowish" -->
-  <div class="question-container container">
-    <div class="tenor-gif-embed" data-postid="25789758" data-share-method="host" data-width="100%">
-      <a href="https://tenor.com/view/tkthao219-bubududu-gif-25789758">Tkthao219 Bubududu Sticker</a>from
-      <a href="https://tenor.com/search/tkthao219-stickers">Tkthao219 Stickers</a>
-    </div>
-    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-
-    <h2 class="question">Do you love me?</h2>
-    <div class="button-container">
-      <button class="yes-btn btn js-yes-btn">Yes</button>
-      <button class="no-btn btn js-no-btn">No</button>
-    </div>
-  </div>
-  <div class="result-container container">
-    <video class="gif-result" src="./cute love gif.mp4" autoplay loop></video>
-    <h2>I knew it😍!</h2>
-    <h2>I love u too 😍😘!</h2>
+  <!-- ============================================================
+       Ambient backdrop — animated gradient blobs
+       ============================================================ -->
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
   </div>
 
-  <div class="cssload-main">
-    <div class="cssload-heart">
-      <span class="cssload-heartL"></span>
-      <span class="cssload-heartR"></span>
-      <span class="cssload-square"></span>
-    </div>
-    <div class="cssload-shadow"></div>
+  <!-- ============================================================
+       Utility bar — sound toggle
+       ============================================================ -->
+  <div class="utility-bar">
+    <button type="button" class="icon-btn js-sound-toggle" aria-pressed="false" aria-label="Enable sound effects"
+      title="Toggle sound">
+      <span class="icon-btn__glyph" aria-hidden="true">🔇</span>
+    </button>
   </div>
 
-  <!-- Add confetti canvas -->
-  <canvas id="confetti-canvas"></canvas>
+  <!-- ============================================================
+       Main stage — cards stack on top of each other via CSS Grid
+       ============================================================ -->
+  <main class="stage" id="stage">
 
-  <!-- Add confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
+    <!-- ─────────── QUESTION CARD ─────────── -->
+    <section class="card card--question is-active" id="questionCard" aria-labelledby="questionTitle">
+      <div class="media media--gif">
+        <iframe src="https://tenor.com/embed/25789758" title="Cute bubu dudu sticker" loading="lazy"
+          allowfullscreen></iframe>
+      </div>
 
-  <script src="do_you_love_me.js"></script>
+      <h1 class="title" id="questionTitle">Do you love me?</h1>
+      <p class="subtitle" id="greeting">Be honest&nbsp;… 🥺</p>
+
+      <div class="actions">
+        <button type="button" class="btn btn--yes js-yes-btn">
+          <span class="btn__label">Yes</span>
+        </button>
+        <button type="button" class="btn btn--no js-no-btn" aria-label="No">
+          <span class="btn__label">No</span>
+        </button>
+      </div>
+
+      <!-- Love meter — fills as "No" keeps running away -->
+      <div class="meter" aria-hidden="true">
+        <div class="meter__head">
+          <span class="meter__title">Love meter</span>
+          <span class="meter__value js-meter-value">0%</span>
+        </div>
+        <div class="meter__track">
+          <div class="meter__fill js-meter-fill"></div>
+        </div>
+      </div>
+
+      <p class="hint" aria-hidden="true">Psst&nbsp;… one of these buttons is a little shy.</p>
+    </section>
+
+    <!-- ─────────── LOADER ─────────── -->
+    <div class="loader" id="loader" role="status" aria-live="polite">
+      <div class="loader__pulse">
+        <span class="loader__ring"></span>
+        <svg class="loader__heart" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+      <p class="loader__text">Checking your heart&nbsp;…</p>
+    </div>
+
+    <!-- ─────────── RESULT CARD ─────────── -->
+    <section class="card card--result" id="resultCard" aria-labelledby="resultTitle" aria-hidden="true"
+      aria-live="polite">
+      <div class="media media--video">
+        <video src="./cute love gif.mp4" autoplay loop muted playsinline></video>
+      </div>
+
+      <h2 class="title title--result" id="resultTitle">I knew it! 😍</h2>
+
+      <p class="subtitle subtitle--result js-love-note" aria-live="polite"></p>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn--ghost js-share-btn">
+          <span class="btn__label">Share 💌</span>
+        </button>
+        <button type="button" class="btn btn--ghost js-again-btn">
+          <span class="btn__label">Again 💕</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Decorative layers -->
+  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
+  <canvas id="confetti" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Lightweight toast for clipboard feedback -->
+  <div class="toast js-toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 
 </html>
