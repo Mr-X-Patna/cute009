@@ -1,4 +1,17 @@
-/* ==========   app.js — Do You Love Me? 💗   ========== */
+/* =============================================================
+   app.js — Do You Love Me? 💗
+   -------------------------------------------------------------
+   Sections
+   01. DOM refs & state
+   02. Utilities (audio, vibrate, toast, share, feature-detect)
+   03. Greeting & welcome-back
+   04. No-button dodge (mouse + touch + keyboard)
+   05. Yes flow (question → loader → result)
+   06. Reset
+   07. Celebration (confetti + floating hearts)
+   08. Sound toggle
+   09. Init
+   ============================================================= */
 (() => {
     'use strict';
 
